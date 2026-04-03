@@ -6,7 +6,8 @@ dist:
 
 receivers:
   - gomod: github.com/m1keru/cloudflaregraphql-otel-receiver v0.1.0
-    name: cloudflarereceiver
+    name: cloudflaregraphqlreceiver
+    path: /Users/mtiurin/work/git/cloudflaregraphql-otel-receiver
 
 processors:
   - gomod: go.opentelemetry.io/collector/processor/batchprocessor v0.96.0

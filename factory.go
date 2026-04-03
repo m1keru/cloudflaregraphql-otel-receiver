@@ -8,7 +8,7 @@ import (
 	"go.opentelemetry.io/collector/receiver"
 )
 
-const typeStr = "cloudflarereceiver"
+const typeStr = "cloudflaregraphqlreceiver"
 
 // NewFactory creates the component.Factory for the Cloudflare Analytics receiver.
 func NewFactory() receiver.Factory {

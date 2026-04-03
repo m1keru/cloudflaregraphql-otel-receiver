@@ -49,6 +49,9 @@ func (r *cloudflareReceiver) Start(_ context.Context, _ component.Host) error {
 
 // Shutdown stops the polling loop and waits for it to finish.
 func (r *cloudflareReceiver) Shutdown(_ context.Context) error {
+	if r.cancel == nil {
+		return nil
+	}
 	r.cancel()
 	r.wg.Wait()
 	r.logger.Info("Cloudflare receiver stopped")
