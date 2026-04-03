@@ -1,0 +1,12 @@
+# Build output
+dist/
+
+# Real config with secrets (use example-config.yaml as reference)
+config.yaml
+
+# macOS
+.DS_Store
+
+# Go
+*.test
+*.out

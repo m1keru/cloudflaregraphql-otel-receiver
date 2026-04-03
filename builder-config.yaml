@@ -1,0 +1,19 @@
+dist:
+  name: otelcol-cloudflaregraphql
+  description: OpenTelemetry Collector with Cloudflare receiver
+  output_path: ./dist
+  otelcol_version: "0.96.0"
+
+receivers:
+  - gomod: github.com/m1keru/cloudflaregraphql-otel-receiver v0.1.0
+    name: cloudflarereceiver
+
+processors:
+  - gomod: go.opentelemetry.io/collector/processor/batchprocessor v0.96.0
+
+exporters:
+  - gomod: go.opentelemetry.io/collector/exporter/otlpexporter v0.96.0
+  - gomod: github.com/open-telemetry/opentelemetry-collector-contrib/exporter/prometheusexporter v0.96.0
+
+extensions:
+  - gomod: go.opentelemetry.io/collector/extension/zpagesextension v0.96.0

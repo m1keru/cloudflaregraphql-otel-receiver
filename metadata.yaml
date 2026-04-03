@@ -1,0 +1,127 @@
+type: cloudflarereceiver
+scope_name: otelcol/cloudflarereceiver
+
+status:
+  class: receiver
+  stability:
+    development: [metrics]
+  distributions: []
+
+resource_attributes:
+  cloudflare.zone:
+    description: The Cloudflare zone name.
+    type: string
+    enabled: true
+
+attributes:
+  cloudflare.zone:
+    description: The Cloudflare zone name.
+    type: string
+  action:
+    description: Firewall action (block, allow, challenge, etc).
+    type: string
+  client.request.http.host:
+    description: HTTP host from client request.
+    type: string
+  lb.name:
+    description: Load balancer name.
+    type: string
+  proxied:
+    description: Whether the request is proxied.
+    type: bool
+  fqdn:
+    description: Fully qualified domain name for health check target.
+    type: string
+  health.status:
+    description: Health check status (healthy, unhealthy).
+    type: string
+  health.changed:
+    description: Whether health status changed in this event.
+    type: bool
+  health.check.name:
+    description: Health check name.
+    type: string
+  logpush.status:
+    description: Logpush job status.
+    type: string
+
+metrics:
+  cloudflare.firewall.events:
+    description: Number of Cloudflare firewall events grouped by host and action.
+    unit: "{events}"
+    gauge:
+      value_type: int
+    enabled: true
+    attributes: [cloudflare.zone, action, client.request.http.host]
+
+  cloudflare.firewall.events.total:
+    description: Total number of Cloudflare firewall events per zone.
+    unit: "{events}"
+    gauge:
+      value_type: int
+    enabled: true
+    attributes: [cloudflare.zone]
+
+  cloudflare.http.requests:
+    description: Number of Cloudflare HTTP requests grouped by host.
+    unit: "{requests}"
+    gauge:
+      value_type: int
+    enabled: true
+    attributes: [cloudflare.zone, client.request.http.host]
+
+  cloudflare.http.requests.total:
+    description: Total number of Cloudflare HTTP requests per zone.
+    unit: "{requests}"
+    gauge:
+      value_type: int
+    enabled: true
+    attributes: [cloudflare.zone]
+
+  cloudflare.loadbalancing.requests:
+    description: Number of Cloudflare load balancing requests grouped by LB name and proxy status.
+    unit: "{requests}"
+    gauge:
+      value_type: int
+    enabled: true
+    attributes: [cloudflare.zone, lb.name, proxied]
+
+  cloudflare.loadbalancing.requests.total:
+    description: Total number of Cloudflare load balancing requests per zone.
+    unit: "{requests}"
+    gauge:
+      value_type: int
+    enabled: true
+    attributes: [cloudflare.zone]
+
+  cloudflare.healthcheck.events:
+    description: Number of Cloudflare health check events grouped by target and status.
+    unit: "{events}"
+    gauge:
+      value_type: int
+    enabled: true
+    attributes: [cloudflare.zone, fqdn, health.status, health.changed, health.check.name]
+
+  cloudflare.healthcheck.events.total:
+    description: Total number of Cloudflare health check events per zone.
+    unit: "{events}"
+    gauge:
+      value_type: int
+    enabled: true
+    attributes: [cloudflare.zone]
+
+  cloudflare.logpush.events:
+    description: Number of Cloudflare logpush events grouped by status.
+    unit: "{events}"
+    gauge:
+      value_type: int
+    enabled: true
+    attributes: [cloudflare.zone, logpush.status]
+
+  cloudflare.logpush.events.total:
+    description: Total number of Cloudflare logpush events per zone.
+    unit: "{events}"
+    gauge:
+      value_type: int
+    enabled: true
+    attributes: [cloudflare.zone]

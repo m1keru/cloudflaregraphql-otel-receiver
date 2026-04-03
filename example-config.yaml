@@ -1,0 +1,60 @@
+# Example OpenTelemetry Collector configuration using cloudflarereceiver.
+#
+# Build a custom collector binary that includes this receiver
+# (e.g. via ocb / opentelemetry-collector-builder), then run it with this config.
+
+receivers:
+  cloudflarereceiver:
+    # Cloudflare GraphQL Analytics API endpoint (default shown below)
+    endpoint: https://api.cloudflare.com/client/v4/graphql
+
+    # Cloudflare API token — use "Bearer <token>" format.
+    # Requires Analytics:Read permission on the target zones.
+    api_key: "Bearer ${env:CF_API_TOKEN}"
+
+    # Cloudflare account email
+    username: "${env:CF_API_EMAIL}"
+
+    # List of zones to collect metrics for.
+    # Zone tags can be found in the Cloudflare dashboard or via the REST API.
+    zones:
+      - name: example1
+        tag: abc123zoneid000000000000000000000
+      - name: example2
+        tag: def456zoneid000000000000000000000
+      - name: example3
+        tag: ghi789zoneid000000000000000000000
+
+    # Maximum rows per GraphQL adaptive-group query (Cloudflare limit: 10000)
+    items_limit: 10000
+
+    # HTTP request timeout
+    timeout: 30s
+
+    # Number of retries on transient errors
+    retries: 3
+
+    # How often to collect metrics.
+    # Cloudflare daily buckets change slowly; 1h is a reasonable default.
+    collection_interval: 3600s
+
+processors:
+  batch:
+
+exporters:
+  # Expose metrics on :9090 for Prometheus scraping
+  prometheus:
+    endpoint: "0.0.0.0:9090"
+
+  # Or forward via OTLP to Grafana Cloud / any OTLP-compatible backend
+  # otlp:
+  #   endpoint: "ingest.grafana.net:443"
+  #   headers:
+  #     authorization: "Basic ${env:GRAFANA_TOKEN}"
+
+service:
+  pipelines:
+    metrics:
+      receivers: [cloudflarereceiver]
+      processors: [batch]
+      exporters: [prometheus]
