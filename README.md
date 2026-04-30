@@ -21,15 +21,15 @@ All metrics are gauges covering the previous full UTC day (midnight-to-midnight 
 
 ## Requirements
 
-- Go 1.21+
-- [OpenTelemetry Collector Builder (ocb)](https://github.com/open-telemetry/opentelemetry-collector/tree/main/cmd/builder) v0.96.0
+- Go 1.25+
+- [OpenTelemetry Collector Builder (ocb)](https://github.com/open-telemetry/opentelemetry-collector/tree/main/cmd/builder) v0.148.0
 
 ## Building
 
 ### 1. Install ocb
 
 ```bash
-go install go.opentelemetry.io/collector/cmd/builder@v0.96.0
+go install go.opentelemetry.io/collector/cmd/builder@v0.148.0
 ```
 
 ### 2. Build the collector binary
@@ -44,7 +44,7 @@ The binary is written to `./dist/otelcol-cloudflaregraphql`.
 
 ```yaml
 receivers:
-  cloudflarereceiver:
+  cloudflaregraphqlreceiver:
     # Cloudflare GraphQL API endpoint (default shown)
     endpoint: https://api.cloudflare.com/client/v4/graphql
 
@@ -74,7 +74,7 @@ exporters:
 service:
   pipelines:
     metrics:
-      receivers: [cloudflarereceiver]
+      receivers: [cloudflaregraphqlreceiver]
       processors: [batch]
       exporters: [prometheus]
 ```
@@ -94,7 +94,7 @@ curl -s -H "Authorization: Bearer $CF_API_TOKEN" \
 
 ```bash
 CF_API_TOKEN=your_token CF_API_EMAIL=you@example.com \
-  ./dist/otelcol-cloudflare --config config.yaml
+  ./dist/otelcol-cloudflaregraphql --config config.yaml
 ```
 
 ## License
