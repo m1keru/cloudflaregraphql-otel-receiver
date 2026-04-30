@@ -1,4 +1,4 @@
-# cloudflaregraphql-otel-receiver
+# cloudflaregraphqlreceiver
 
 OpenTelemetry Collector receiver that scrapes the [Cloudflare Analytics GraphQL API](https://developers.cloudflare.com/analytics/graphql-api/) and exposes metrics for firewall events, HTTP requests, load balancing, health checks, and logpush jobs.
 

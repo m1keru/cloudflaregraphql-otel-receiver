@@ -5,9 +5,8 @@ dist:
   otelcol_version: "0.96.0"
 
 receivers:
-  - gomod: github.com/m1keru/cloudflaregraphql-otel-receiver v0.1.0
+  - gomod: github.com/m1keru/cloudflaregraphqlreceiver v0.2.0
     name: cloudflaregraphqlreceiver
-    path: /Users/mtiurin/work/git/cloudflaregraphql-otel-receiver
 
 processors:
   - gomod: go.opentelemetry.io/collector/processor/batchprocessor v0.96.0

@@ -1,4 +1,4 @@
-module github.com/m1keru/cloudflaregraphql-otel-receiver
+module github.com/m1keru/cloudflaregraphqlreceiver
 
 go 1.21
 
